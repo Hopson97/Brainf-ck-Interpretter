@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <map>
 #include <sstream>
+#include <stack>
 
 /*                  Brainf*ck command list
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -23,10 +24,11 @@
  *      ]       end while
  */
 
-
-
 void run (const std::string& program)
 {
+    std::stack<int> scopeInstruction;
+
+
     char    memory[50000] = {0};
 
     auto    memoryPointer = 0;
@@ -62,7 +64,28 @@ void run (const std::string& program)
                 std::cin >> memory[memoryPointer];
                 break;
 
+            case '[':
+                if (!memory[memoryPointer])
+                {
+                    while (program[instructionPointer++] != ']');
+                }
+                else
+                {
+                    scopeInstruction.push(instructionPointer);
 
+                }
+                break;
+
+            case ']':
+                if (memory[memoryPointer])
+                {
+                    instructionPointer = scopeInstruction.top();
+                }
+                else
+                {
+                    scopeInstruction.pop();
+                }
+                break;
         }
 
     }
@@ -80,6 +103,8 @@ int main(int argc, char** argv)
     auto program = programBuf.str();
 
     run(program);
+
+    std::cin.ignore();
 
     return 0;
 }
