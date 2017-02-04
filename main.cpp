@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstdlib>
 #include <map>
+#include <sstream>
 
 enum class Command
 {
@@ -34,6 +35,21 @@ std::map<char, Command> charToCommand
     { ']', Command::Decrement_DP },
 };
 
+void run (const std::string& program)
+{
+    char    memory[50000] = {0};
+    int     memoryPointer = 0;
+
+    int     instructionPointer = 0;
+
+    while(instructionPointer <= program.length() - 1)
+    {
+        char command = program[instructionPointer++];
+
+
+    }
+}
+
 int main(int argc, char** argv)
 {
     if (argc == 0)
@@ -41,13 +57,11 @@ int main(int argc, char** argv)
 
     std::ifstream inFile(argv[1]);
 
-    std::vector<char>   data;
-    int                 dataPointer = 0;
+    std::stringstream programBuf;
+    programBuf << inFile.rdbuf();
+    auto program = programBuf.str();
 
-    std::string program;
-
-    auto programBuf = inFile.rdbuf();
-
+    run(program);
 
     return 0;
 }
