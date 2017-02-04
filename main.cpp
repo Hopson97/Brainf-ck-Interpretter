@@ -5,47 +5,65 @@
 #include <map>
 #include <sstream>
 
-enum class Command
-{
-    Increment_DP,   // >    Increment the data pointer (to point to the next cell to the right).
-    Decrement_DP,   // <    Decrement the data pointer (to point to the next cell to the left).
+/*                  Brainf*ck command list
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ *
+ *  Command     Desciption
+ *
+ *      >       Increment the data pointer (to point to the next cell to the right).
+ *      <       Decrement the data pointer (to point to the next cell to the left).
+ *
+ *      +       Increment (increase by one) the byte at the data pointer.
+ *      -       decrement (decrease by one) the byte at the data pointer.
+ *
+ *      .       Print out the character
+ *      ,       Get one char/ byte of input
+ *
+ *      [       Begin while(the value in memory at the mem ptr is not 0)
+ *      ]       end while
+ */
 
-    Increment_VAL,  // +    Increment (increase by one) the byte at the data pointer.
-    Decrement_VAL,  // -    decrement (decrease by one) the byte at the data pointer.
 
-    Put_Char,        // .    Print out the character
-    Get_Char,        // ,    Get one char/ byte of input
-
-    Begin_While,     // [
-    End_While,       // ]
-};
-
-std::map<char, Command> charToCommand
-{
-    { '>', Command::Increment_DP },
-    { '<', Command::Decrement_DP },
-
-    { '+', Command::Decrement_DP },
-    { '-', Command::Decrement_DP },
-
-    { '.', Command::Decrement_DP },
-    { ',', Command::Decrement_DP },
-
-    { '[', Command::Decrement_DP },
-    { ']', Command::Decrement_DP },
-};
 
 void run (const std::string& program)
 {
     char    memory[50000] = {0};
-    int     memoryPointer = 0;
 
-    int     instructionPointer = 0;
+    auto    memoryPointer = 0;
+    auto    instructionPointer = 0;
 
-    while(instructionPointer <= program.length() - 1)
+    while((unsigned)instructionPointer <= program.length() - 1)
     {
-        char command = program[instructionPointer++];
+        auto command = program[instructionPointer++];
 
+        switch(command)
+        {
+            case '>':
+                memoryPointer++;
+                break;
+
+            case '<':
+                memoryPointer--;
+                break;
+
+            case '+':
+                memory[memoryPointer]++;
+                break;
+
+            case '-':
+                memory[memoryPointer]--;
+                break;
+
+            case '.':
+                std::cout << memory[memoryPointer] << std::endl;
+                break;
+
+            case ',':
+                std::cin >> memory[memoryPointer];
+                break;
+
+
+        }
 
     }
 }
