@@ -57,7 +57,7 @@ void run (const std::string& program)
                 break;
 
             case '.':
-                std::cout << memory[memoryPointer] << std::endl;
+                std::cout << memory[memoryPointer];
                 break;
 
             case ',':
@@ -72,7 +72,6 @@ void run (const std::string& program)
                 else
                 {
                     scopeInstruction.push(instructionPointer);
-
                 }
                 break;
 
@@ -104,7 +103,8 @@ int main(int argc, char** argv)
 
     run(program);
 
+    std::cout << "Success. Press any ket to exit." << std::endl;
     std::cin.ignore();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
