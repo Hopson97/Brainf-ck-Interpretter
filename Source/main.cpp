@@ -6,6 +6,8 @@
 #include <sstream>
 #include <stack>
 
+#include "Interpretter.h"
+
 /*                  Brainf*ck command list
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  *
@@ -23,85 +25,30 @@
  *      [       Begin while(the value in memory at the mem ptr is not 0)
  *      ]       end while
  */
-
-void run (const std::string& program)
+namespace
 {
-    std::stack<int> scopeInstruction;
+     std::string getProgramString(const std::string& fileName)
+     {
+        std::ifstream inFile(fileName);
 
+        std::stringstream programBuf;
+        programBuf << inFile.rdbuf();
 
-    char    memory[50000] = {0};
-
-    auto    memoryPointer = 0;
-    auto    instructionPointer = 0;
-
-    while((unsigned)instructionPointer <= program.length() - 1)
-    {
-        auto command = program[instructionPointer++];
-
-        switch(command)
-        {
-            case '>':
-                memoryPointer++;
-                break;
-
-            case '<':
-                memoryPointer--;
-                break;
-
-            case '+':
-                memory[memoryPointer]++;
-                break;
-
-            case '-':
-                memory[memoryPointer]--;
-                break;
-
-            case '.':
-                std::cout << memory[memoryPointer];
-                break;
-
-            case ',':
-                std::cin >> memory[memoryPointer];
-                break;
-
-            case '[':
-                if (!memory[memoryPointer])
-                {
-                    while (program[instructionPointer++] != ']');
-                }
-                else
-                {
-                    scopeInstruction.push(instructionPointer);
-                }
-                break;
-
-            case ']':
-                if (memory[memoryPointer])
-                {
-                    instructionPointer = scopeInstruction.top();
-                }
-                else
-                {
-                    scopeInstruction.pop();
-                }
-                break;
-        }
-
-    }
-}
+        return programBuf.str();
+     }
+ }
 
 int main(int argc, char** argv)
 {
-    if (argc == 0)
+    if (argc < 2)
+    {
+        std::cout << "This programs requires a FILE NAME INPUT. Exiting." << std::endl;
         return EXIT_FAILURE;
 
-    std::ifstream inFile(argv[1]);
+    }
 
-    std::stringstream programBuf;
-    programBuf << inFile.rdbuf();
-    auto program = programBuf.str();
-
-    run(program);
+    Interpretter interpretter(getProgramString(argv[1]));
+    interpretter.run();
 
     std::cout << "Success. Press any ket to exit." << std::endl;
     std::cin.ignore();
