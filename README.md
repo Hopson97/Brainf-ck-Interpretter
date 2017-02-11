@@ -4,8 +4,7 @@ Simple brainf*ck interpretter
 It is a simple satire language with simple rules:
 
 
-
- # Command-Desciption
+## Command-Desciption
  
  *      >       Increment the data pointer (to point to the next cell to the right).
  *      <       Decrement the data pointer (to point to the next cell to the left).
