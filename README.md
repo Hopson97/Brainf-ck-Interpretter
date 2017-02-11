@@ -4,10 +4,8 @@ Simple brainf*ck interpretter
 It is a simple satire language with simple rules:
 
 
-/*                  Brainf*ck command list
- * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *
- *  Command     Desciption
+
+ #Command     Desciption
  *
  *      >       Increment the data pointer (to point to the next cell to the right).
  *      <       Decrement the data pointer (to point to the next cell to the left).
