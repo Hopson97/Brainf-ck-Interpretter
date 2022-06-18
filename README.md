@@ -1,5 +1,5 @@
 # Brainf-ck-Interpretter
-Simple brainf*ck interpretter
+Simple brainf*ck interpreter
 
 It is a simple satire language with simple rules:
 
@@ -18,3 +18,4 @@ It is a simple satire language with simple rules:
  *      [       Begin while(the value in memory at the mem ptr is not 0)
  *      ]       end while
  */
+
